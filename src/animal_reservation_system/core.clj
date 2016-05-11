@@ -1,16 +1,10 @@
 (ns animal-reservation-system.core)
 
-(def horses #{"All Star"
-              "Genesis"
-              "Pumpkin"
-              "Misty"
-              "Good Morning Sunshine"
-              "Boombird"
-              "Sunny"
-              "Brooke"})
-
 (defn take-random-n [animals n]
   (take n (shuffle animals)))
 
-(defn make-reservation [{:keys [number date period] :as reservation-request}]
-  (take-random-n horses number))
+(defn make-reservation [reservations all-horses {:keys [number date periods] :as reservation-request}]
+  (let [reserved-horses (take-random-n all-horses number)]
+    (doseq [period periods]
+      (swap! reservations assoc-in [date period] (set reserved-horses)))
+    reserved-horses))

@@ -1,5 +1,6 @@
 (ns animal-reservation-system.handler
   (:require [animal-reservation-system.core :as core]
+            [animal-reservation-system.data :as data]
             [compojure.core :refer [GET POST defroutes]]
             [compojure.route :as route]
             [ring.middleware.defaults :refer [wrap-defaults api-defaults]]
@@ -9,7 +10,7 @@
 (defroutes app-routes
   (GET "/" [] (response "OK"))
   (POST "/reservations" {reservation-request :body}
-        (response (core/make-reservation reservation-request)))
+        (response (core/make-reservation data/reservations data/horses reservation-request)))
   (route/not-found "Not Found"))
 
 (def app
