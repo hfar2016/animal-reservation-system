@@ -9,3 +9,7 @@
   (testing "Horses are picked at random"
     (let [picks (repeatedly 10 #(first (take-random-n horses 1)))]
       (is (not= 1 (count (frequencies picks)))))))
+
+(deftest make-reservation-test
+  (testing "Happy path"
+    (is (= 3 (count (make-reservation {:number 3 :date "2016-06-01" :period [:morning]}))))))

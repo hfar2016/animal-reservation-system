@@ -1,0 +1,14 @@
+# -*- restclient -*-
+
+GET http://localhost:3000/
+
+#
+
+POST http://localhost:3000/reservations
+Content-Type: application/json
+
+{
+  "number": 3,
+  "date": "2016-06-01",
+  "period": ["morning"]
+}

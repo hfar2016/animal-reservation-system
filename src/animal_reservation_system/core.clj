@@ -11,3 +11,6 @@
 
 (defn take-random-n [animals n]
   (take n (shuffle animals)))
+
+(defn make-reservation [{:keys [number date period] :as reservation-request}]
+  (take-random-n horses number))
