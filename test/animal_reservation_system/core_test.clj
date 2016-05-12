@@ -15,7 +15,29 @@
   (testing "Single new reservation"
     (let [reservations (atom {})
           test-horses #{"Some" "Fake" "Horses"}
-          reservation-request {:number 3 :date "2016-06-01" :periods #{"morning"}}
-          reserved-horses (make-reservation reservations test-horses reservation-request)]
+          request {:number 3 :date "2016-06-01" :periods #{"morning"}}
+          reserved-horses (make-reservation reservations test-horses request)]
       (is (= test-horses (set reserved-horses)))
-      (is (= {"2016-06-01" {"morning" (set reserved-horses)}} @reservations)))))
+      (is (= {"2016-06-01" {"morning" (set reserved-horses)}} @reservations))))
+
+  (testing "All are booked"
+    (let [reservations (atom {"2016-06-01" {"morning" #{"Alpha"}
+                                            "afternoon" #{"Beta"}
+                                            "evening" #{"Gamma"}}})
+          test-horses #{"Alpha" "Beta" "Gamma"}
+          request {:number 3 :date "2016-06-01" :periods #{"morning" "afternoon" "evening"}}
+          reserved-horses (make-reservation reservations test-horses request)]
+      (is (= 0 (count reserved-horses)))))
+
+  (testing "1 slot is available"
+    (let [reservations (atom {"2016-06-01" {"morning" #{"Alpha"}
+                                            "evening" #{"Gamma"}}})
+          test-horses #{"Alpha" "Beta" "Gamma"}
+          request {:number 3 :date "2016-06-01" :periods #{"morning" "afternoon" "evening"}}
+          reserved-horses (make-reservation reservations test-horses request)]
+      (is (= 1 (count reserved-horses)))
+      (is (= "Beta" (first reserved-horses)))
+      (is (= {"2016-06-01" {"morning" #{"Alpha" "Beta"}
+                            "afternoon" #{"Beta"}
+                            "evening" #{"Beta" "Gamma"}}}
+             @reservations)))))

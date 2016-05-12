@@ -2,8 +2,10 @@
 
 GET http://localhost:3000/
 
-#
+# list existing reservations
+GET http://localhost:3000/reservations
 
+# make a reservation
 POST http://localhost:3000/reservations
 Content-Type: application/json
 
@@ -12,3 +14,6 @@ Content-Type: application/json
   "date": "2016-06-02",
   "periods": ["morning"]
 }
+
+# this should blow up with 400
+POST http://localhost:3000/reservations
