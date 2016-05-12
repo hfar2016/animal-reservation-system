@@ -1,5 +1,6 @@
 (ns animal-reservation-system.handler-test
   (:require [animal-reservation-system.core :as core]
+            [animal-reservation-system.core-test :refer [alpha]]
             [animal-reservation-system.data :as data]
             [animal-reservation-system.handler :refer :all]
             [clojure.test :refer :all]
@@ -17,12 +18,12 @@
       (is (= "Not Found" (:body response)))))
 
   (testing "/reservations POST"
-    (with-redefs [core/make-reservation (constantly ["Some" "Fake" "Horses"])]
+    (with-redefs [core/make-reservation (constantly [alpha])]
       (let [response (app (-> (mock/request :post "/reservations" "{}")
                               (mock/content-type "application/json")))]
         (is (= 200 (:status response)))
         (is (= "application/json; charset=utf-8" (get-in response [:headers "Content-Type"])))
-        (is (= "[\"Some\",\"Fake\",\"Horses\"]" (:body response))))))
+        (is (= "[\"Alpha\"]" (:body response))))))
 
   (testing "/reservations POST malformed request"
     (let [response (app (mock/request :post "/reservations" "Whatever"))]

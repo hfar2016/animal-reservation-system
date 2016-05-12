@@ -15,7 +15,7 @@
 
   (POST "/reservations" {request :body}
     (if (map? request)
-      (response (core/make-reservation data/reservations data/horses request))
+      (response (map :name (core/make-reservation data/reservations data/horses request)))
       {:status 400
        :body "I didn't quite get that. Please send a valid reservation request as application/json."}))
 

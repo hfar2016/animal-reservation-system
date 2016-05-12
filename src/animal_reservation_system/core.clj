@@ -15,4 +15,3 @@
     (doseq [period periods]
       (swap! reservations update-in [date period] set/union (set newly-reserved)))
     newly-reserved))
-
