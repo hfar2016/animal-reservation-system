@@ -12,7 +12,7 @@ To start the development server (listens on [localhost:3000](http://localhost:30
 $ lein ring server-headless
 ```
 
-There are some [sample requests](docs/requests.txt) that should work with [restclient](https://github.com/pashky/restclient.el).
+There are some [sample requests](doc/requests.txt) that should work with [restclient](https://github.com/pashky/restclient.el).
 
 ## curl examples
 ```
