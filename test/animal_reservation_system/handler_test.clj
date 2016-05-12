@@ -18,7 +18,7 @@
       (is (= "Not Found" (:body response)))))
 
   (testing "/reservations POST"
-    (with-redefs [core/make-reservation (constantly [alpha])]
+    (with-redefs [core/make-reservation! (constantly [alpha])]
       (let [response (app (-> (mock/request :post "/reservations" "{}")
                               (mock/content-type "application/json")))]
         (is (= 200 (:status response)))

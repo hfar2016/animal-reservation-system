@@ -43,12 +43,12 @@
     (let [picks (repeatedly 10 #(first (take-random-n data/horses 1)))]
       (is (not= 1 (count (frequencies picks)))))))
 
-(deftest make-reservation-test
+(deftest make-reservation!-test
   (testing "Blackout rules"
     (testing "Single new reservation"
       (let [reservations (atom {})
             request {:number 3 :date "2016-06-01" :periods #{"morning"}}
-            reserved-horses (make-reservation reservations test-horses request)]
+            reserved-horses (make-reservation! reservations test-horses request)]
         (is (= test-horses (set reserved-horses)))
         (is (= {"2016-06-01" {"morning" (set reserved-horses)}} @reservations))))
 
@@ -57,14 +57,14 @@
                                               "afternoon" #{beta}
                                               "evening" #{gamma}}})
             request {:number 3 :date "2016-06-01" :periods #{"morning" "afternoon" "evening"}}
-            reserved-horses (make-reservation reservations test-horses request)]
+            reserved-horses (make-reservation! reservations test-horses request)]
         (is (empty? reserved-horses))))
 
     (testing "1 slot is available"
       (let [reservations (atom {"2016-06-01" {"morning" #{alpha}
                                               "evening" #{gamma}}})
             request {:number 3 :date "2016-06-01" :periods #{"morning" "afternoon" "evening"}}
-            reserved-horses (make-reservation reservations test-horses request)]
+            reserved-horses (make-reservation! reservations test-horses request)]
         (is (= 1 (count reserved-horses)))
         (is (= beta (first reserved-horses)))
         (is (= {"2016-06-01" {"morning" #{alpha beta}
@@ -76,19 +76,19 @@
     (testing "Reservation for physical exam"
       (let [reservations (atom {})
             request {:number 3 :date "2016-06-01" :periods #{"morning"} :procedures ["physical exam"]}
-            reserved-horses (make-reservation reservations test-horses request)]
+            reserved-horses (make-reservation! reservations test-horses request)]
         (is (= test-horses (set reserved-horses)))
         (is (= {"2016-06-01" {"morning" (set reserved-horses)}} @reservations))))
 
     (testing "Reservation for uterine biopsy"
       (let [reservations (atom {})
             request {:number 3 :date "2016-06-01" :periods #{"morning"} :procedures ["uterine biopsy (mares only)"]}
-            reserved-horses (make-reservation reservations test-horses request)]
+            reserved-horses (make-reservation! reservations test-horses request)]
         (is (= [gamma] reserved-horses))
         (is (= {"2016-06-01" {"morning" #{gamma}}} @reservations))))
 
     (testing "Reservation for uterine biopsy when no mares available"
       (let [reservations (atom {"2016-06-01" {"morning" #{gamma}}})
             request {:number 3 :date "2016-06-01" :periods #{"morning"} :procedures ["uterine biopsy (mares only)"]}
-            reserved-horses (make-reservation reservations test-horses request)]
+            reserved-horses (make-reservation! reservations test-horses request)]
         (is (empty? reserved-horses))))))
