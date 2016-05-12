@@ -17,3 +17,25 @@ Content-Type: application/json
 
 # this should blow up with 400
 POST http://localhost:3000/reservations
+
+# make a reservation for uterine biopsy
+POST http://localhost:3000/reservations
+Content-Type: application/json
+
+{
+  "number": 8,
+  "date": "2016-06-02",
+  "periods": ["morning", "afternoon", "evening"],
+  "procedures": ["uterine biopsy (mares only)"]
+}
+
+# make a reservation for hoof exam and care
+POST http://localhost:3000/reservations
+Content-Type: application/json
+
+{
+  "number": 8,
+  "date": "2016-06-02",
+  "periods": ["morning", "afternoon", "evening"],
+  "procedures": ["hoof exam and care"]
+}
