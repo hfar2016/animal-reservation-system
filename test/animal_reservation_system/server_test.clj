@@ -1,8 +1,8 @@
-(ns animal-reservation-system.handler-test
+(ns animal-reservation-system.server-test
   (:require [animal-reservation-system.core :as core]
             [animal-reservation-system.core-test :refer [alpha]]
             [animal-reservation-system.data :as data]
-            [animal-reservation-system.handler :refer :all]
+            [animal-reservation-system.server :refer :all]
             [clojure.test :refer :all]
             [ring.mock.request :as mock]))
 
@@ -10,6 +10,7 @@
   (testing "/"
     (let [response (app (mock/request :get "/"))]
       (is (= 200 (:status response)))
+      (is (= "text/plain; charset=utf-8" (get-in response [:headers "Content-Type"])))
       (is (= "OK" (:body response)))))
 
   (testing "/not-found"
