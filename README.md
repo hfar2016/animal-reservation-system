@@ -7,9 +7,9 @@ To run tests
 $ lein test
 ```
 
-To start the development server (listens on [localhost:3000](http://localhost:3000))
+To start the server (listens on [localhost:3000](http://localhost:3000))
 ```
-$ lein ring server-headless
+$ lein run
 ```
 
 There are some [sample requests](doc/requests.txt) that should work with [restclient](https://github.com/pashky/restclient.el).

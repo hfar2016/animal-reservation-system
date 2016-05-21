@@ -35,14 +35,6 @@
                     {"procedure-1" #(#{:mare :stallion} (:gender %))
                      "procedure-3" #(= "Alpha" (:name %))})))))
 
-(deftest take-random-n-test
-  (testing "Happy path"
-    (is (= 3 (count (take-random-n data/horses 3)))))
-
-  (testing "Horses are picked at random"
-    (let [picks (repeatedly 10 #(first (take-random-n data/horses 1)))]
-      (is (not= 1 (count (frequencies picks)))))))
-
 (deftest make-reservation!-test
   (testing "Blackout rules"
     (testing "Single new reservation"

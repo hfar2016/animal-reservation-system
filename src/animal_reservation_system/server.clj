@@ -6,7 +6,8 @@
             [immutant.web :as web]
             [ring.middleware.defaults :refer [wrap-defaults api-defaults]]
             [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
-            [ring.util.response :refer [content-type response]]))
+            [ring.util.response :refer [content-type response]])
+  (:gen-class))
 
 (defroutes app-routes
   (GET "/" []
@@ -33,5 +34,5 @@
 (defn -main [& args]
   (web/run app {:host "localhost" :port 3000}))
 
-(defn run-dev-server [& args]
-  (web/run-dmc app {:host "localhost" :port 3000}))
+(defn start-dev-server [& args]
+  (web/run-dmc app {:host "localhost" :port 3001}))
